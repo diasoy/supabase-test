@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useEffect, useState } from "react";
 import { supabase } from "../utils/supabaseClient";
 
 export default function Home() {
-  const [users, setUsers] = useState([]);
-  const [posts, setPosts] = useState([]);
+  const [users, setUsers] = useState<any[]>([]);
+  const [posts, setPosts] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
