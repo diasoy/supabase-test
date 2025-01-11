@@ -13,28 +13,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Toast,
-  ToastTitle,
-  ToastDescription,
-  ToastProvider,
-  ToastViewport,
-} from "@/components/ui/toast";
 
 export default function Home() {
   const [notes, setNotes] = useState<any[]>([]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [toastVisible, setToastVisible] = useState(false);
-  const [toastContent, setToastContent] = useState<{
-    title: string;
-    description: string;
-    status: "default" | "destructive" | "success" | null | undefined;
-  }>({
-    title: "",
-    description: "",
-    status: "default",
-  });
 
   const fetchNotes = async () => {
     const { data, error } = await supabase.from("Note").select("*");
@@ -58,12 +41,6 @@ export default function Home() {
       setTitle("");
       setBody("");
       fetchNotes();
-      setToastContent({
-        title: "Catatan berhasil ditambahkan",
-        description: "Catatan baru telah berhasil ditambahkan.",
-        status: "success",
-      });
-      setToastVisible(true);
     }
   };
 
@@ -73,12 +50,6 @@ export default function Home() {
       console.error("Error deleting note:", error);
     } else {
       fetchNotes();
-      setToastContent({
-        title: "Catatan berhasil dihapus",
-        description: "Catatan telah berhasil dihapus.",
-        status: "success",
-      });
-      setToastVisible(true);
     }
   };
 
@@ -152,15 +123,6 @@ export default function Home() {
           </Card>
         </main>
       </div>
-      <ToastProvider>
-        {toastVisible && (
-          <Toast variant={toastContent.status}>
-            <ToastTitle>{toastContent.title}</ToastTitle>
-            <ToastDescription>{toastContent.description}</ToastDescription>
-          </Toast>
-        )}
-        <ToastViewport />
-      </ToastProvider>
     </>
   );
 }
